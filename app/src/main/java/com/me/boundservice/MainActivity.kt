@@ -3,13 +3,15 @@ package com.me.boundservice
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.android.service.google.AidlInterface
-import android.content.Context.BIND_AUTO_CREATE
 import android.content.Intent
 import android.content.ComponentName
 import android.os.IBinder
 import android.content.ServiceConnection
 import android.util.Log
 import android.content.Context;
+import android.os.RemoteException
+import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity(),ServiceConnection {
@@ -20,6 +22,10 @@ class MainActivity : AppCompatActivity(),ServiceConnection {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initService(applicationContext,"com.bound.server")
+        txt1.setOnClickListener {
+          val version = getVersionCode()
+            Toast.makeText(applicationContext,"$version",Toast.LENGTH_LONG).show()
+        }
     }
 
 
@@ -37,6 +43,20 @@ class MainActivity : AppCompatActivity(),ServiceConnection {
 
         val bindService = context.bindService(intent, this, Context.BIND_AUTO_CREATE)
         Log.d("bindService", "bindService: $bindService")
+    }
+
+    private fun getVersionCode(): Int {
+        try {
+            val version = mService!!.version
+            Log.d("version", ">>>>>>>> version: $version<<<<<<<<<<<")
+            return version
+        } catch (e: RemoteException) {
+            e.printStackTrace()
+        } catch (e: NullPointerException) {
+            e.printStackTrace()
+        }
+
+        return 0
     }
 
 
