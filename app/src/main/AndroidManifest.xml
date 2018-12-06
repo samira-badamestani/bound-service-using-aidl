@@ -17,6 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <service android:name=".VersionService">
+            <intent-filter>
+                <action android:name="com.android.service.google.VersionService"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
