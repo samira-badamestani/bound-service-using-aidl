@@ -42,7 +42,12 @@ class MainActivity : AppCompatActivity(),ServiceConnection {
         intent.setPackage(packageName)
 
         val bindService = context.bindService(intent, this, Context.BIND_AUTO_CREATE)
-        Log.d("bindService", "bindService: $bindService")
+        if (bindService){
+            Toast.makeText(applicationContext,"service bounded",Toast.LENGTH_LONG).show()
+        }else{
+            Toast.makeText(applicationContext,"oppsss",Toast.LENGTH_LONG).show()
+        }
+
     }
 
     private fun getVersionCode(): Int {
